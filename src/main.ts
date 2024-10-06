@@ -2,6 +2,7 @@ import "./style.css";
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Stats from "three/addons/libs/stats.module.js";
+import { GUI } from "dat.gui";
 
 const scene = new THREE.Scene();
 
@@ -11,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.z = 1.5;
+camera.position.z = 3;
 
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -33,6 +34,18 @@ scene.add(cube);
 
 const stats = new Stats();
 document.body.appendChild(stats.dom);
+
+const gui = new GUI();
+const cubeFolder = gui.addFolder("Cube");
+
+cubeFolder.add(cube.rotation, "x", 0, Math.PI * 2);
+cubeFolder.add(cube.rotation, "y", 0, Math.PI * 2);
+cubeFolder.add(cube.rotation, "z", 0, Math.PI * 2);
+cubeFolder.open();
+
+const cameraFolder = gui.addFolder("Camera");
+cameraFolder.add(camera.position, "z", 0, 20);
+cameraFolder.open();
 
 function animate() {
   requestAnimationFrame(animate);
